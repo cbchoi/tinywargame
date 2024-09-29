@@ -5,22 +5,25 @@
 
 class CAgent
 {
+protected:
+    CAgent(){}
 public:
     CAgent(double x, double y, double heading, double speed, double drange);
     virtual ~CAgent();
 
 public:
-    void maneuver(double time);
-    bool detect(Pos loc);
+    virtual void maneuver(double time);
+    virtual bool detect(CAgent* pTarget);
 
 public:
-    const Pos& getPosition() const;
-    unsigned long getAgentID() const;
-    double getSpeed() const;
-    double getHeading() const;
-    double getRange() const;
+    virtual const Pos& getPosition() const;
+    virtual unsigned long getAgentID() const;
+    virtual double getSpeed() const;
+    virtual double getHeading() const;
+    virtual double getRange() const;
 
 private:
+    unsigned long m_agent_id;
     Pos    m_position;  
     double m_heading;
     double m_speed;

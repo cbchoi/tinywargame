@@ -7,7 +7,7 @@ unsigned long CAgent::AGENT_ID = 0;
 
 CAgent::CAgent(double x, double y, double heading, double speed, double drange)
 {
-    AGENT_ID++;
+    m_agent_id = AGENT_ID++;
 
     m_position.x = x;
     m_position.y = y;
@@ -29,9 +29,17 @@ void CAgent::maneuver(double time)
 
 }
 
-bool CAgent::detect(Pos loc)
+bool CAgent::detect(CAgent* pTarget)
 {
-    return false;
+    bool detectFlag = false;
+    std::cout << "\tAgentID: " << m_agent_id << " Detection Start" << std::endl;
+    if(CALC_DIST(m_position, pTarget->getPosition()) <= m_detect_range)
+    {
+        std::cout << "\t>> Target Detected: " << pTarget->getAgentID() << std::endl; 
+        detectFlag = true;
+    }
+    std::cout << "\tAgentID: " << m_agent_id << " Detection Ended" << std::endl;
+    return detectFlag;
 }
 
 const Pos& CAgent::getPosition() const
@@ -41,7 +49,7 @@ const Pos& CAgent::getPosition() const
 
 unsigned long CAgent::getAgentID() const
 {
-    return AGENT_ID;
+    return m_agent_id;
 }
 
 double CAgent::getSpeed() const
